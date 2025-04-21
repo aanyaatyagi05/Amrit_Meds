@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amrit Meds - Home</title>
+
+  <!-- Google Fonts and Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wdth,wght@0,18..144,102.6,300..900;1,18..144,102.6,300..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Internal CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wdth,wght@0,18..144,102.6,300..900;1,18..144,102.6,300..900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      background-color: #71b7d7;
+      color: black;
+      line-height: 3.6;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: rgb(135, 171, 222);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-heading {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .search-bar {
+      margin-bottom: 50px;
+    }
+
+    .search-bar input {
+      width: 300px;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .search-bar button:hover {
+      background-color: #45a049;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+
+    nav ul li a {
+      display: inline-block;
+      padding: 20px 30px;
+      background-color: #d4edda;
+      color: #333;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #b7e3c1;
+    }
+
+    section {
+      padding: 20px;
+      margin: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    section h2 {
+      margin-bottom: 15px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .product img {
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
+      border-radius: 5px;
+    }
+
+    .product-info {
+      flex-grow: 1;
+    }
+
+    .product-info h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .product-info p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <i class="fa-solid fa-house" style="font-size: 28px;"></i>
+  <header>
+    <h1 class="main-heading">Welcome to <strong>Amrit Meds <i class="fa-solid fa-pills" style="font-size: 32px;"></i></strong></h1>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for medicines..." />
+      <button onclick="searchMedicine()">Search</button>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="#medicines">Medicines</a></li>
+        <li><a href="#bodycare">Body Care</a></li>
+        <li><a href="#baby-section">Baby Section</a></li>
+        <li><a href="{{ url_for('haircare') }}">Haircare</a></li>
+        <li><a href="#sexual-wellness">Sexual Wellness</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="medicines">
+    <h2>Medicines</h2>
+    <!-- Products go here -->
+  </section>
+
+  <section id="bodycare">
+    <h2>Body Care</h2>
+    <!-- Products go here -->
+  </section>
+
+  <section id="baby-section">
+    <h2>Baby Section</h2>
+    <!-- Products go here -->
+  </section>
+
+  <section id="haircare">
+    <h2>Haircare</h2>
+    <!-- Products go here -->
+  </section>
+
+  <section id="sexual-wellness">
+    <h2>Sexual Wellness</h2>
+    <!-- Products go here -->
+  </section>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

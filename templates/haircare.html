@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Haircare Products - Amrit Meds</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/haircare.css') }}">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f8177;
+      margin: 0;
+      padding: 50px;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+    }
+    .products-container {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .product-card {
+      display: flex;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 25px;
+      align-items: center;
+    }
+    .product-card img {
+      height: 150px;
+      width: 150px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-right: 40px;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h2 {
+      margin: 0;
+      font-size: 30px;
+      color: #2c3e50;
+    }
+    .product-info p {
+      margin: 5px 0;
+      color: #555;
+    }
+    .product-price {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    .add-to-cart {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .add-to-cart:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+  <h1>Haircare Products</h1>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <h3>{{ product.name }}</h3>
+                    <p><strong>Category:</strong> {{ product.category }}</p>
+                    <p><strong>Description:</strong> {{ product.description }}</p>
+                    <p><strong>Price:</strong> ₹{{ product.price }}</p>
+                    <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+                    <p><strong>Usage:</strong> {{ product.usage }}</p>
+                    <p><strong>Company:</strong> {{ product.company }}</p>
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ products.name }}" width="150">
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products available.</p>
+    {% endif %}
+</body>
+</html>
