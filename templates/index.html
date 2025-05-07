@@ -3,27 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login| Amrit Meds</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <title>Amrit Meds - Login/Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f5ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%);
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            width: 80px;
+            height: 80px;
+        }
+        
+        h1 {
+            color: #2c5282;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login {
+            background-color: #4299e1;
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background-color: #3182ce;
+        }
+        
+        .btn-signup {
+            background-color: white;
+            color: #4299e1;
+            border: 2px solid #4299e1;
+        }
+        
+        .btn-signup:hover {
+            background-color: #ebf8ff;
+        }
+        
+        .form-container {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .form-footer a {
+            color: #4299e1;
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: #718096;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .back-btn:hover {
+            color: #4299e1;
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="container">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="#4299e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"></path>
+                <path d="M12 8v8"></path>
+                <path d="M8 12h8"></path>
+            </svg>
+        </div>
+        
         <h1>Welcome to Amrit Meds</h1>
-        <form id="loginForm">
-          <label for="mobile">Mobile Number:</label>
-          <input type="text" id="mobile" placeholder="Enter your mobile number" required>
-          
-          <label for="email">Email Address:</label>
-          <input type="email" id="email" placeholder="Enter your email address" required>
-          
-          <button type="submit">Generate OTP</button>
-        </form>
-        <p id="otpMessage"></p>
-      </div>
-    
-      <script src="/js/script.js"></script>
-      
-      
+        
+        <div class="buttons" id="buttons">
+            <button class="btn btn-login" onclick="showForm('login')">Login</button>
+            <button class="btn btn-signup" onclick="showForm('signup')">Sign Up</button>
+        </div>
+        
+        <div class="form-container" id="login-form">
+            <form>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-login">Login</button>
+                <div class="form-footer">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </form>
+            <button class="back-btn" onclick="hideForm()">Back to options</button>
+        </div>
+        
+        <div class="form-container" id="signup-form">
+            <form>
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" required>
+                </div>
+                <button type="submit" class="btn btn-signup">Create Account</button>
+            </form>
+            <button class="back-btn" onclick="hideForm()">Back to options</button>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formType) {
+            document.getElementById('buttons').style.display = 'none';
+            
+            if (formType === 'login') {
+                document.getElementById('login-form').classList.add('active');
+            } else if (formType === 'signup') {
+                document.getElementById('signup-form').classList.add('active');
+            }
+        }
+        
+        function hideForm() {
+            document.getElementById('buttons').style.display = 'flex';
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('signup-form').classList.remove('active');
+        }
+    </script>
 </body>
 </html>

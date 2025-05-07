@@ -2,92 +2,220 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Haircare Products - Amrit Meds</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/haircare.css') }}">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haircare Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: Arial, sans-serif;
-      background: #0f8177;
-      margin: 0;
-      padding: 50px;
+      font-family: 'Merriweather', serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+      color: #333;
     }
     h1 {
       text-align: center;
-      color: white;
+      margin-bottom: 40px;
+      color: #4a90e2;
     }
-    .products-container {
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-      max-width: 1000px;
-      margin: auto;
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
     }
     .product-card {
-      display: flex;
       background: white;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 25px;
-      align-items: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
-    .product-card img {
-      height: 150px;
-      width: 150px;
+    .product-img img {
+      width: 100%;
+      height: 200px;
       object-fit: cover;
-      border-radius: 20px;
-      margin-right: 40px;
     }
     .product-info {
-      flex: 1;
+      padding: 20px;
     }
-    .product-info h2 {
-      margin: 0;
-      font-size: 30px;
-      color: #2c3e50;
+    .product-info h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .product-info .price {
+      font-size: 18px;
+      color: #28a745;
+      margin-bottom: 5px;
+    }
+    .product-info .quantity {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
     }
     .product-info p {
-      margin: 5px 0;
-      color: #555;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
-    .product-price {
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px 20px;
+      gap: 10px;
+    }
+    .add-to-cart, .wishlist {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
       font-weight: bold;
-      color: #e74c3c;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .add-to-cart {
-      background: #27ae60;
+      background-color: #4a90e2;
       color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
     }
     .add-to-cart:hover {
-      background: #219150;
+      background-color: #3a7bc8;
+    }
+    .wishlist {
+      background-color: #f1f1f1;
+      color: #dc3545;
+    }
+    .wishlist:hover {
+      background-color: #e9e9e9;
     }
   </style>
 </head>
 <body>
   <h1>Haircare Products</h1>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/minoxidil.jpg" alt="Minoxidil">
 
-    {% if products %}
-        <ul>
-            {% for product in products %}
-                <li>
-                    <h3>{{ product.name }}</h3>
-                    <p><strong>Category:</strong> {{ product.category }}</p>
-                    <p><strong>Description:</strong> {{ product.description }}</p>
-                    <p><strong>Price:</strong> ₹{{ product.price }}</p>
-                    <p><strong>Quantity:</strong> {{ product.quantity }}</p>
-                    <p><strong>Usage:</strong> {{ product.usage }}</p>
-                    <p><strong>Company:</strong> {{ product.company }}</p>
-                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ products.name }}" width="150">
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No products available.</p>
-    {% endif %}
+      </div>
+      <div class="product-info">
+        <h3>Minoxidil 5%</h3>
+        <div class="price">₹550</div>
+        <div class="quantity">60ml</div>
+        <p><strong>Description:</strong> Treats hair loss and promotes regrowth</p>
+        <p><strong>Usage:</strong> Apply to scalp twice daily</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/anaboom.jpg" alt="Anaboom Shampoo">
+      </div>
+      <div class="product-info">
+        <h3>Anaboom Shampoo</h3>
+        <div class="price">₹380</div>
+        <div class="quantity">100ml</div>
+        <p><strong>Description:</strong> Anti-hair fall and scalp care formula</p>
+        <p><strong>Usage:</strong> Use thrice a week</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/triclenz.jpg" alt="Triclenz Shampoo">
+      </div>
+      <div class="product-info">
+        <h3>Triclenz Shampoo</h3>
+        <div class="price">₹410</div>
+        <div class="quantity">100ml</div>
+        <p><strong>Description:</strong> For hair and scalp cleansing</p>
+        <p><strong>Usage:</strong> Use every alternate day</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/hairbless.jpg" alt="Hairbless Tablets">
+      </div>
+      <div class="product-info">
+        <h3>Hairbless Tablets</h3>
+        <div class="price">₹630</div>
+        <div class="quantity">30 tablets</div>
+        <p><strong>Description:</strong> Rich in biotin</p>
+        <p><strong>Usage:</strong> One tablet daily</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/sebamed_shampoo.jpg" alt="Sebamed Anti-Hairloss Shampoo">
+      </div>
+      <div class="product-info">
+        <h3>Sebamed Anti-Hairloss Shampoo</h3>
+        <div class="price">₹480</div>
+        <div class="quantity">200ml</div>
+        <p><strong>Description:</strong> Gentle pH 5.5 shampoo</p>
+        <p><strong>Usage:</strong> Use twice a week</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/mahabhringraj.jpg" alt="Baidyanath Mahabhringraj Oil">
+      </div>
+      <div class="product-info">
+        <h3>Baidyanath Mahabhringraj Oil</h3>
+        <div class="price">₹180</div>
+        <div class="quantity">200ml</div>
+        <p><strong>Description:</strong> Ayurvedic oil</p>
+        <p><strong>Usage:</strong> Massage into scalp</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <img src="/static/images/indulekha.jpg" alt="Indulekha Bringha Oil">
+      </div>
+      <div class="product-info">
+        <h3>Indulekha Bringha Oil</h3>
+        <div class="price">₹430</div>
+        <div class="quantity">100ml</div>
+        <p><strong>Description:</strong> Reduces hair fall</p>
+        <p><strong>Usage:</strong> Apply directly to scalp</p>
+      </div>
+      <div class="product-actions">
+        <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+        <button class="wishlist"><i class="far fa-heart"></i></button>
+      </div>
+    </div>
+
+  </div>
 </body>
 </html>

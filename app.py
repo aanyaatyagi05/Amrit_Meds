@@ -1,90 +1,100 @@
-from flask import Flask, render_template, request
-import sqlite3
+from flask import Flask, render_template, request, redirect, url_for
+from flask_mysqldb import MySQL
+import MySQLdb.cursors  # for dictionary cursor
+import traceback        # for debugging errors
 
 app = Flask(__name__)
 
-# Home page
+# -----------------------------
+# MySQL Configuration
+# -----------------------------
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'aanyat020'
+app.config['MYSQL_DB'] = 'amrit_meds'
+
+mysql = MySQL(app)
+
+# -----------------------------
+# Routes
+# -----------------------------
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# Medicine Search
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('q')
-    conn = sqlite3.connect('medicines.db')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM medicines WHERE name LIKE ?", ('%' + query + '%',))
-    results = cur.fetchall()
-    conn.close()
 
-    if not results:
-        return render_template('no_results.html', query=query)
-    return render_template('medicine.html', medicines=results)
-
-# Option 1: Hardcoded haircare data
 @app.route('/haircare')
 def haircare():
-    haircare_products = [
-        {
-            "name": "Minoxidil 5%", "category": "Hair Growth",
-            "description": "Treats hair loss and promotes regrowth",
-            "price": 550, "quantity": "60ml",
-            "usage": "Apply to scalp twice daily",
-            "company": "Dr. Reddy's",
-            "image": "minoxidil.jpg"
-        },
-        {
-            "name": "Anaboom Shampoo", "category": "Shampoo",
-            "description": "Anti-hair fall and scalp care formula",
-            "price": 380, "quantity": "100ml",
-            "usage": "Use thrice a week",
-            "company": "Sun Pharma",
-            "image": "anaboom.jpg"
-        },
-        {
-            "name": "Triclenz Shampoo", "category": "Shampoo",
-            "description": "Dermatologist-recommended for hair and scalp cleansing",
-            "price": 410, "quantity": "100ml",
-            "usage": "Use every alternate day",
-            "company": "Curatio",
-            "image": "triclenz.jpg"
-        },
-        {
-            "name": "Hairbless Tablets", "category": "Supplement",
-            "description": "Strengthens hair from the root, rich in biotin",
-            "price": 630, "quantity": "30 tablets",
-            "usage": "One tablet daily after food",
-            "company": "Ajanta Pharma",
-            "image": "hairbless.jpg"
-        },
-        {
-            "name": "Sebamed Anti-Hairloss Shampoo", "category": "Shampoo",
-            "description": "Gentle shampoo with pH 5.5 to reduce hair fall",
-            "price": 480, "quantity": "200ml",
-            "usage": "Use twice a week",
-            "company": "Sebamed",
-            "image": "sebamed.jpg"
-        },
-        {
-            "name": "Baidyanath Mahabhringraj Oil", "category": "Hair Oil",
-            "description": "Ayurvedic oil for strong, black hair",
-            "price": 180, "quantity": "200ml",
-            "usage": "Massage into scalp before bedtime",
-            "company": "Baidyanath",
-            "image": "mahabhringraj.jpg"
-        },
-        {
-            "name": "Indulekha Bringha Oil", "category": "Hair Oil",
-            "description": "Ayurvedic proprietary medicine for hair fall",
-            "price": 430, "quantity": "100ml",
-            "usage": "Apply directly to scalp and leave overnight",
-            "company": "Hindustan Unilever",
-            "image": "indulekha.jpg"
-        }
-    ]
-    return render_template('haircare.html', products=haircare_products)
+    return render_template('haircare.html')
 
-# Start the Flask app
+
+@app.route('/skincare')
+def skincare():
+    return render_template('skincare.html')
+
+
+@app.route('/sexual-wellness')
+def sexual_wellness():
+    return render_template('sexual-wellness.html')
+
+
+@app.route('/medicines')
+def show_medicines():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute("SELECT * FROM medicine_products")
+    data = cur.fetchall()
+    cur.close()
+    return render_template('medicines.html', medicines=data)
+
+
+@app.route('/babysection')
+def babysection():
+    return render_template('babysection.html')
+
+
+# -----------------------------
+# Search Route (Fixed)
+# -----------------------------
+@app.route('/search', methods=['GET'])
+def search():
+    search_query = request.args.get('query', '').strip()
+    results = []
+
+    if search_query:
+        try:
+            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            query = """
+                SELECT id, image_path, name, price, quantity, description, dosage, company
+                FROM medicine_products
+                WHERE name LIKE %s
+            """
+            cur.execute(query, (f"%{search_query}%",))
+            results = cur.fetchall()
+            cur.close()
+        except Exception as e:
+            print("Error during search:", e)
+            traceback.print_exc()
+
+    return render_template('results.html', query=search_query, results=results)
+
+
+# -----------------------------
+# Cart and Wishlist (Dummy)
+# -----------------------------
+@app.route('/add_to_cart/<int:product_id>', methods=['POST'])
+def add_to_cart(product_id):
+    return f"Product {product_id} added to cart!"
+
+
+@app.route('/add_to_wishlist/<int:product_id>', methods=['POST'])
+def add_to_wishlist(product_id):
+    return f"Product {product_id} added to wishlist!"
+
+
+# -----------------------------
+# Run the App
+# -----------------------------
 if __name__ == '__main__':
     app.run(debug=True)
+
